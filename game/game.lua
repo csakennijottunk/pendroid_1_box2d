@@ -16,14 +16,16 @@ function game:new()
     ---@type World
     self.world = World(0,9.81,true)
     self:addWorld(self.world)
-    self.ground = Element(self.world,"Rectangle",{800,600,1600,200})
+    self.ground = Element(self.world,"Rectangle",{800,600,1600,200},nil,false)
     self:addElement(self.ground)
     self.ground:setType(Body.Bodytype.static)
-    self.player = Element(self.world,"Rectangle",{450,100,200,200})
+    self.player = Element(self.world,"circle",{0,0,100,100},"assets/ball.png",false)
     self.player:setType(Body.Bodytype.dynamic)
+    self:addElement(self.player)
 
-    self.cam = Camera(self.world,0,0,self.player,1,0,true)
+    self.cam = Camera(self.world,0,0,self.player,0.5,0,true,false)
     self:addCamera(self.cam)
+
 
 end
 

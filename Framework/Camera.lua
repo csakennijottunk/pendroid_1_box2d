@@ -34,10 +34,25 @@ function Camera:new(world,x,y,element,zoom,rot,smooth,rotation_allowed)
 
 end
 
-function Camera:draw()
+function Camera:draw(elements)
+    local hud_components = {}
+    local non_hud_components = {}
+    for i,v in pairs(elements) do
+        if v.hud_element then
+            table.insert(hud_components,v)
+        else
+            table.insert(non_hud_components,v)
+        end
+    end
     self.cam:attach()
     self.world.world:draw()
+    for i,v in pairs(non_hud_components) do
+        v:draw()
+    end
     self.cam:detach()
+    for i,v in pairs(hud_components) do
+        v:draw()
+    end
 end
 
 function Camera:update(dt)

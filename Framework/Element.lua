@@ -7,11 +7,29 @@
 require("Framework.Body")
 Element = Body:extend()
 
-function Element:new(world,type,draw_arguments)
-    Element.super.new(self,nil)
+function Element:new(world,type,draw_arguments,img,hud_element)
+    Element.super.new(self)
+    self.hud_element = hud_element or false
     self.world = world
     self.type = type or "Rectangle"
     self.draw_arguments = draw_arguments or {50,50,100,100,0}
+    if string.lower(self.type) == "rectangle" then
+        self.w,self.h = self.draw_arguments[3],self.draw_arguments[4]
+    elseif string.lower(self.type) == "circle" then
+        self.w,self.h = self.draw_arguments[3]*2,self.draw_arguments[3]*2
+    end
+    self.imgP = img or nil
+    if self.imgP ~= nil then
+        self.img = love.graphics.newImage(tostring(self.imgP))
+        self.ow,self.oh = self.img:getWidth(),self.img:getHeight()
+    end
     ---@type collider_object
     self.body = world.world:newCollider(self.type,self.draw_arguments)
+end
+
+function Element:draw()
+    print("szar")
+    if self.img ~= nil then
+        love.graphics.draw(self.img,self:getX(),self:getY(),self:getAngle(),self.w/self.ow,self.h/self.oh,self.ow/2,self.oh/2)
+    end
 end

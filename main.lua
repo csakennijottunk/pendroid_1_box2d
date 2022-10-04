@@ -7,7 +7,7 @@ function  love.load()
     Object = require("Framework.classic")
     require("game.game")
     game = game()
-    love.window.setMode(900,650)
+    love.window.setMode(1600,920)
 
 
 end

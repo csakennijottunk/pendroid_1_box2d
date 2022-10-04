@@ -15,6 +15,7 @@ function GameManager:addWorld(world)
     require("Framework.World")
     if self.currentWorld ~= nil then
         self.currentWorld:destroy()
+        self.elements = {}
     end
     self.currentWorld = world
 end
@@ -39,7 +40,7 @@ end
 function GameManager:draw()
     if (self.currentWorld ~= nil) then
         if (self.currentCamera ~= nil) then
-            self.currentCamera:draw()
+            self.currentCamera:draw(self.elements)
         else
             self.currentWorld.world:draw()
         end
